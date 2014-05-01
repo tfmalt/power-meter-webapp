@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="powerApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="description" content="">
+    <meta name="author" content="Thomas Malt <thomas@malt.no>">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+
+    <title>Power Meter Dashboard</title>
+
+     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/css/powermeter.css">
+      
+  </head>
+  <body>
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container" ng-controller="NavbarCtrl">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle"
+                  ng-init="navCollapsed = true" 
+                  ng-click="navCollapsed = !navCollapsed">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">SD60 Power Meter</a>
+        </div>
+
+        <div class="navbar-collapse collapse" 
+             ng-class="!navCollapsed && 'in' " ng-click="navCollapsed=true"
+             id="sd60-navbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active" id="google-signin">
+              <span id="signinButton">
+                <span class="g-signin"
+                      data-callback="signinCallback"
+                      data-clientid="230346417276.apps.googleusercontent.com"
+                      data-cookiepolicy="single_host_origin"
+                      data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                      data-scope="https://www.googleapis.com/auth/plus.login">
+                </span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <!-- End of header beginning of main page                             -->
+    <div class="container" ng-controller="PowerCtrl">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Forbruk nå</h3>
+            </div>
+            <div class="panel-body" id="usage-chart-now-body">
+              <div id="usage-chart-now"></div>
+              <div id="power-meter-total">
+                <table>
+                  <tr>
+                    <td colspan="2">
+                      <div id="set-meter-container" 
+                           class="set-meter-container hidden">
+                        <div class="power-label">
+                          Total kWh
+                        </div>
+                        <form id="form-set-meter" role="form" 
+                              ng-submit="setMeter($event)">
+                          <div class="input-container">
+                            <input id="meter-value" class="total" type="number" 
+                                   pattern="[0-9]*" max="999999" min="142927"
+                                   ng-model="meterTotal" required>
+                          </div>
+                          <div class="button-container">
+                            <button type="submit" 
+                                    class="btn btn-success btn-lg">
+                              <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                            <a ng-click="handleTotalCancel($event)"
+                               class="btn btn-danger btn-lg">
+                              <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                          </div>
+                        </form>
+                        <div class="timestamp">
+                          {{meterTotalTimestamp}}
+                        </div>
+                      </div>
+                      <div id="meter-total-container">
+                        <div class="power-label">
+                          Total kWh
+                        </div>
+                        <div id="meter-total" class="total" 
+                             ng-click="handleTotalClick($event)">
+                          {{meterTotalWithDelta}}
+                        </div>
+                        <div class="timestamp">
+                            {{meterTotalTimestamp}}
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr id="totals-summary-row">
+                    <td>
+                      <span>Yesterday</span><br>
+                      <span class="kwh-day">{{kwhYesterday}}</span>
+                      <span>kWh</span>
+                    </td>
+                    <td>
+                      <span>Today</span><br>
+                      <span class="kwh-day">{{kwhToday}}</span>
+                      <span>kWh</span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Forbruk siste time</h3>
+            </div>
+            <div class="panel-body">
+              <div id="usage-chart-hour"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">kWh per hour last 3 days</h3>
+            </div>
+            <div class="panel-body">
+              <div id="kwh-hour-25"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">kWh per døgn siste 31 dager</h3>
+            </div>
+            <div class="panel-body">
+              <div id="kwh-day-31"></div> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="js/angular/angular.js"></script>
+    <script src="js/angular-touch/angular-touch.js"></script>
+    <script src="js/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="/js/enquire.min.js"></script>
+    <script type="text/javascript" src="/js/powergraphs.js"></script>
+    <script type="text/javascript" src="/js/powerapp.js"></script>
+
+    <script type="text/javascript">
+    (function() {
+        var po = document.createElement('script'); 
+        po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/client:plusone.js';
+        var s = document.getElementsByTagName('script')[0]; 
+        s.parentNode.insertBefore(po, s);
+      })();
+    </script>
+  </body>
+</html>

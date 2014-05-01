@@ -1,0 +1,17 @@
+{
+  "name": "power-meter-webapp",
+  "description": "The webapp version of power-meter",
+  "version": "0.0.1",
+  "homepage": "",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "3.x",
+    "angular-bootstrap": "~0.10.0",
+    "angular": "1.2.16",
+    "angular-touch": "1.2.16",
+    "angular-route": "1.2.16",
+    "angular-loader": "1.2.16",
+    "angular-mocks": "1.2.16"
+  }
+}

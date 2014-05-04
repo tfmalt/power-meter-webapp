@@ -7,6 +7,7 @@ RUN ls -l /usr/bin/node*
 
 ADD . /src
 RUN cd /src; npm install
+RUN npm install -g http-server
 
 EXPOSE 3003
 CMD ["/usr/bin/nodejs", "/src/app.js"]

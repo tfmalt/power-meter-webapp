@@ -13,7 +13,7 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower --allow-root install",
 
     "start": "http-server -p 3003 ./app",
     "test": "karma start test/karma.conf.js",

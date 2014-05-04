@@ -7,6 +7,8 @@ RUN ls -l /usr/bin/node*
 
 ADD . /src
 RUN cd /src; npm install
+RUN pwd
+RUN bower install
 RUN npm install -g http-server
 
 EXPOSE 3003

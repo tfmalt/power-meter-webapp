@@ -8,10 +8,10 @@ RUN ls -l /usr/bin/node*
 ADD . /src
 RUN cd /src; npm install
 RUN pwd
-RUN bower install
-RUN npm install -g http-server
+# RUN cd /src; pwd; bower install
+# RUN cd /src; npm install -g http-server
 
 EXPOSE 3003
-CMD ["http-server", "-p",  "3003", "/src/app"]
+# CMD ["http-server", "-p",  "3003", "/src/app"]
 
 

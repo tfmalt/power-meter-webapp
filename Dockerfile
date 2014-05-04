@@ -10,6 +10,6 @@ RUN cd /src; npm install
 RUN npm install -g http-server
 
 EXPOSE 3003
-CMD ["/usr/bin/http-server", "-p",  "3003", "/src/app"]
+CMD ["http-server", "-p",  "3003", "/src/app"]
 
 

@@ -2,7 +2,7 @@
  * Angular controller to set and update the form to enter the actual power 
  * meter reading.
  *
- * Copyright (c) 2013 Thomas Malt
+ * Copyright (c) 2013-2014 Thomas Malt
  *
  * @author Thomas Malt <thomas@malt.no>
  * @copyright Thomas Malt <thomas@malt.no>
@@ -43,8 +43,8 @@ powerApp.controller('PowerCtrl', function ($scope, $http, $interval) {
         });
 
         $http.get(apihost + "/power/kwh/hour/73").then(power.kwh.day.hour.draw);
-        $http.get(apihost + "/power/usage/10").then(power.watt.now.draw);
-        $http.get(apihost + "/power/hour/watts").then(power.watt.hour.draw);
+        $http.get(apihost + "/power/watts/10").then(power.watt.now.draw);
+        $http.get(apihost + "/power/watts/hour").then(power.watt.hour.draw);
         $http.get(apihost + "/power/kwh/day/62").then(power.kwh.month.day.draw);
     };
 
@@ -53,7 +53,7 @@ powerApp.controller('PowerCtrl', function ($scope, $http, $interval) {
     $w.on("orientationchange", $scope.updateGraphs);
     
     var stopWattNow = $interval(function () {
-        $http.get(apihost + "/power/usage/10").then(power.watt.now.draw);
+        $http.get(apihost + "/power/watts/10").then(power.watt.now.draw);
     }, 1000);
 
     var stopKwhDayHour = $interval(function () {
@@ -61,7 +61,7 @@ powerApp.controller('PowerCtrl', function ($scope, $http, $interval) {
     }, 5*60*1000);
 
     var stopWattHour = $interval(function () {
-        $http.get(apihost + "/power/hour/watts").then(power.watt.hour.draw);
+        $http.get(apihost + "/power/watts/hour").then(power.watt.hour.draw);
     }, 6000);
 
     /**
@@ -210,16 +210,3 @@ function signinCallback (result) {
     }
 }
 
-
-
-
-/* enquire.register("screen and (max-device-width: 320px)", {
-    match: function () {
-        // alert("Got match for ios device");
-        $('div.navbar-fixed-top').removeClass('navbar-fixed-top');
-    }, 
-    unmatch: function () {
-        alert("Got unmatch for ios device");
-    }
-});
-*/

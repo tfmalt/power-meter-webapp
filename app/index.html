@@ -58,74 +58,72 @@
     <div class="container" ng-controller="PowerCtrl">
       <div class="row">
         <div class="col-md-6">
-          <div class="panel panel-success">
-            <div class="panel-heading">
-              <h3 class="panel-title">Forbruk nå</h3>
+            <div class="panel">
+                <h3 class="panel-title">Forbruk nå</h3>
+                <div class="panel-body" id="usage-chart-now-body">
+                    <div id="usage-chart-now"></div>
+                    <div id="power-meter-total">
+                        <table>
+                            <tr>
+                                <td colspan="2">
+                                    <div id="set-meter-container" 
+                                        class="set-meter-container hidden">
+                                        <div class="power-label">
+                                            Total kWh
+                                        </div>
+                                        <form id="form-set-meter" role="form" 
+                                            ng-submit="setMeter($event)">
+                                            <div class="input-container">
+                                                <input id="meter-value" class="total" type="number" 
+                                                    pattern="[0-9]*" max="999999" min="142927"
+                                                    ng-model="meterTotal" required>
+                                            </div>
+                                            <div class="button-container">
+                                                <button type="submit" 
+                                                    class="btn btn-success btn-lg">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </button>
+                                                <a ng-click="handleTotalCancel($event)"
+                                                    class="btn btn-danger btn-lg">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </a>
+                                            </div>
+                                        </form>
+                                        <div class="timestamp">
+                                            {{meterTotalTimestamp}}
+                                        </div>
+                                    </div>
+                                    <div id="meter-total-container">
+                                        <div class="power-label">
+                                            Total kWh
+                                        </div>
+                                        <div id="meter-total" class="total" 
+                                            ng-click="handleTotalClick($event)">
+                                            {{meterTotalWithDelta}}
+                                        </div>
+                                        <div class="timestamp">
+                                            {{meterTotalTimestamp}}
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="totals-summary-row">
+                            <td>
+                                <span>Yesterday</span><br>
+                                <span class="kwh-day">{{kwhYesterday}}</span>
+                                <span>kWh</span>
+                            </td>
+                            <td>
+                                <span>Today</span><br>
+                                <span class="kwh-day">{{kwhToday}}</span>
+                                <span>kWh</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-            <div class="panel-body" id="usage-chart-now-body">
-              <div id="usage-chart-now"></div>
-              <div id="power-meter-total">
-                <table>
-                  <tr>
-                    <td colspan="2">
-                      <div id="set-meter-container" 
-                           class="set-meter-container hidden">
-                        <div class="power-label">
-                          Total kWh
-                        </div>
-                        <form id="form-set-meter" role="form" 
-                              ng-submit="setMeter($event)">
-                          <div class="input-container">
-                            <input id="meter-value" class="total" type="number" 
-                                   pattern="[0-9]*" max="999999" min="142927"
-                                   ng-model="meterTotal" required>
-                          </div>
-                          <div class="button-container">
-                            <button type="submit" 
-                                    class="btn btn-success btn-lg">
-                              <span class="glyphicon glyphicon-ok"></span>
-                            </button>
-                            <a ng-click="handleTotalCancel($event)"
-                               class="btn btn-danger btn-lg">
-                              <span class="glyphicon glyphicon-remove"></span>
-                            </a>
-                          </div>
-                        </form>
-                        <div class="timestamp">
-                          {{meterTotalTimestamp}}
-                        </div>
-                      </div>
-                      <div id="meter-total-container">
-                        <div class="power-label">
-                          Total kWh
-                        </div>
-                        <div id="meter-total" class="total" 
-                             ng-click="handleTotalClick($event)">
-                          {{meterTotalWithDelta}}
-                        </div>
-                        <div class="timestamp">
-                            {{meterTotalTimestamp}}
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr id="totals-summary-row">
-                    <td>
-                      <span>Yesterday</span><br>
-                      <span class="kwh-day">{{kwhYesterday}}</span>
-                      <span>kWh</span>
-                    </td>
-                    <td>
-                      <span>Today</span><br>
-                      <span class="kwh-day">{{kwhToday}}</span>
-                      <span>kWh</span>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
         </div>
+    </div>
         <div class="col-md-6">
           <div class="panel panel-success">
             <div class="panel-heading">
